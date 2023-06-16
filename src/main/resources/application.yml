@@ -1,0 +1,37 @@
+app:
+    keycloak:
+        admin:
+         username: admin
+         password: password
+        login:
+            url: http://keycloak:8080/auth/realms/demo-realm-app/protocol/openid-connect/token
+        server:
+            url: http://keycloak:8080/auth
+        client-secret: S7H3zUsLPLfMCG2MXrsjA3xlVpdgLUib
+        realm:
+         name: demo-realm-app
+        client-id: cas-rest-api
+        grant-type: password
+keycloak:
+    use-resource-role-mappings: 'true'
+    ssl-required: external
+spring:
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://keycloak:8080/auth/realms/demo-realm-app/user
+    profiles:
+        active: development
+    # Database
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://dbpostgresql:5432/inscriptions
+        username: myowner
+        password: password
+    # JPA properties
+    jpa:
+        hibernate:
+            ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
+server:
+    port: 8083
